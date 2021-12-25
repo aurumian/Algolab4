@@ -7,8 +7,30 @@
 
 int main()
 {
-    FixedSizeAllocator al;
-    al.init();
+    FixedSizeAllocator allocator;
+    allocator.init();
+    int* pi = (int*)allocator.alloc(sizeof(int));
+    allocator.dumpStat();
+    allocator.dumpBlocks();
+    double* pd = (double*)allocator.alloc(sizeof(double));
+    allocator.dumpStat();
+    allocator.dumpBlocks();
+    int* pa = (int*)allocator.alloc(10 * sizeof(int));
+    allocator.dumpStat();
+    allocator.dumpBlocks();
+    _ASSERT(pa != nullptr);
+    allocator.dumpStat();
+    allocator.dumpBlocks();
+    allocator.free(pi);
+    int* pi2 = (int*)allocator.alloc(sizeof(int));
+    allocator.dumpStat();
+    allocator.dumpBlocks();
+    allocator.free(pi2);
+    allocator.free(pa);
+    allocator.dumpBlocks();
+    allocator.free(pd);
+    allocator.dumpBlocks();
+    allocator.destroy();
 
 
     std::cout << "Hello World!\n";
